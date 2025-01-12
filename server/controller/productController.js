@@ -13,21 +13,29 @@ export const allProducts = asyncHandler(async (req, res) => {
 
     const queryObj = { ...req.query }
 
-    const excludeFields = ['page', 'limit']
+    const excludeFields = ['page', 'limit', 'name']
     excludeFields.forEach(el => delete queryObj[el])
 
+    let query
+
+    if (req.query.name) {
+        query = Product.find({
+            name: { $regex: req.query.name, $options: 'i' }
+        })
+    } else {
+        query = Product.find(queryObj)
+    }
     // console.log(queryObj);
-    let query = Product.find(queryObj)
 
     const page = req.query.page * 1 || 1
     const limitData = req.query.limit * 1 || 30
     const skipData = (page - 1) * limitData
     query = query.skip(skipData).limit(limitData)
 
+    let countProducts = await Product.countDocuments()
 
     if (req.query.page) {
-        const numProduct = await Product.countDocuments()
-        if (skipData >= numProduct) {
+        if (skipData >= countProducts) {
             res.status(404)
             throw new Error('This page does not exist')
         }
@@ -37,7 +45,8 @@ export const allProducts = asyncHandler(async (req, res) => {
 
     res.status(200).json({
         message: 'Success get all products',
-        data
+        data,
+        count : countProducts
     })
 })
 
