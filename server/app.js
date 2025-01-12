@@ -13,11 +13,12 @@ const port = 3000
 app.use(express.json())
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }))
+app.use(express.static('./public'))
 
 dbConnection()
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Server Ready !')
 })
 
 
