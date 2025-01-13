@@ -1,6 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler.js'
 import Order from '../models/orderModel.js'
 import Product from '../models/productModel.js'
+
 export const createOrder = asyncHandler(async (req, res) => {
     const { email, firstname, lastname, phone, cartItem } = req.body
     if (!cartItem || cartItem.length === 0) {
