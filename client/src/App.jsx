@@ -7,6 +7,7 @@ import ProductView from './pages/ProductView'
 import LoginView from './pages/auth/LoginView'
 import RegisterView from './pages/auth/RegisterView'
 import PublicLayout from './layouts/PublicLayout'
+import DetailProduct from './pages/DetailProduct'
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: 'products',
         element: <ProductView />,
+      },
+      {
+        path: 'product/detail/:id',
+        element: <DetailProduct/>,
       },
       {
         path: 'orders',

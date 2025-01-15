@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Link } from 'react-router-dom'
 const formatHarga = (harga) => {
     const rupiahFormat = new Intl.NumberFormat('id-ID', {
         style: 'currency',
@@ -22,7 +22,7 @@ const CartProduct = ({ item }) => {
                     <p className="font-bold text-accent">{formatHarga(item.price)}</p>
                     <p>{item.description.substring(0, 50)}</p>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary">Buy Now</button>
+                        <Link to={`/product/detail/${item._id}`} className="btn btn-primary">Buy Now</Link>
                     </div>
                 </div>
             </div>

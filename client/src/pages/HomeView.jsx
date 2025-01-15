@@ -5,7 +5,7 @@ const HomeView = () => {
     const [products, setProducts] = useState([])
     const getProducts = async () => {
         try {
-            const { data } = await API.get('/product/products')
+            const { data } = await API.get('/product/products?limit=3')
             // console.log(data);
             setProducts(data.data);
         } catch (error) {
@@ -26,7 +26,7 @@ const HomeView = () => {
             </div>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
                 {products.map(item => (
-                    <CartProduct item={item} />
+                    <CartProduct item={item} key={item._id}/>
                 ))}
             </div>
         </>
