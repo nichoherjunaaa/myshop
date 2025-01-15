@@ -21,7 +21,7 @@ const DetailProduct = () => {
 
     useEffect(() => {
         productData()
-    })
+    }, [])
 
     return (
         <section>
