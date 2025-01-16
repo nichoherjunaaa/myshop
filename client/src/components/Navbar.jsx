@@ -1,9 +1,21 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 import NavList from './NavList'
 import { BsCart3 } from 'react-icons/bs'
-import { FaBarsStaggered } from'react-icons/fa6'
+import { FaBarsStaggered } from 'react-icons/fa6'
+import { useSelector, useDispatch } from 'react-redux'
+import API from '../api'
+import { logoutUser } from '../features/userSlice'
+
 const Navbar = () => {
+    const user = useSelector(state => state.userState.user)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const handlingLogout = async () => {
+        await API.get('/auth/logout')
+        dispatch(logoutUser())
+        navigate('/')
+    }
     return (
         <nav className="bg-base-200">
             <div className="navbar mx-auto max-w-6xl px-8">
@@ -33,6 +45,9 @@ const Navbar = () => {
                             <span className="badge badge-primary badge-sm indicator-item">8</span>
                         </div>
                     </NavLink>
+                    {user && (
+                        <button className="btn btn-error btn-outline btn-md" onClick={handlingLogout}>Logout</button>
+                    )}
                 </div>
             </div>
         </nav >

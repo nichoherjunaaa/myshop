@@ -1,12 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-const formatHarga = (harga) => {
-    const rupiahFormat = new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR'
-    }).format(harga)
-    return rupiahFormat
-}
+import { formatHarga } from '../utils'
 
 const CartProduct = ({ item }) => {
     return (

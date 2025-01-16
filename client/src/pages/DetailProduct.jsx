@@ -2,21 +2,24 @@ import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import API from '../api'
 import { FaPlus } from 'react-icons/fa'
+import { generateSelectAmount, formatHarga } from '../utils'
+
 const DetailProduct = () => {
     let { id } = useParams()
     const [product, setProduct] = useState("")
+    const [amount, setAmount] = useState(1)
     const productData = async () => {
         const { data } = await API.get(`/product/detail/${id}`)
         // console.log(data.data);
         setProduct(data.data)
     }
 
-    const formatHarga = (harga) => {
-        const rupiahFormat = new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR'
-        }).format(harga)
-        return rupiahFormat
+    const handleAmount = (e) => {
+        setAmount(parseInt(e.target.value))
+    }
+
+    const cartHandle = () => {
+        console.log("Keranjang", product, amount);
     }
 
     useEffect(() => {
@@ -39,7 +42,15 @@ const DetailProduct = () => {
                     <span className="mt-3 font-bold">Stok : {product.stock} </span>
                     <p className="mt-3">{product.description}</p>
                     <div className="card-actions justify-end">
-                        <button className="btn btn-primary btn-lg"><FaPlus/>Keranjang</button>
+                        <div className="p-8 flex flex-col gap-y-4">
+                            <label htmlFor="" className="form-control">
+                                <label htmlFor="" className="label">
+                                    <span className="capitalize label-text">Amount</span>
+                                </label>
+                                <select name="amount" className="select select-bordered" id="" onChange = {handleAmount}>{generateSelectAmount(product.stock)}</select>
+                            </label>
+                            <button className="btn btn-primary btn-lg" onClick = {cartHandle}><FaPlus />Keranjang</button>
+                        </div>
                     </div>
                 </div>
             </div>
