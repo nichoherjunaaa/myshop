@@ -30,7 +30,7 @@ export const allProducts = asyncHandler(async (req, res) => {
     // console.log(queryObj);
 
     const page = req.query.page * 1 || 1
-    const limitData = req.query.limit * 1 || 10
+    const limitData = req.query.limit * 1 || 3
     const skipData = (page - 1) * limitData
     query = query.skip(skipData).limit(limitData)
 

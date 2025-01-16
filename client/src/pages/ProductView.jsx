@@ -2,6 +2,7 @@ import API from "../api"
 import { useLoaderData } from 'react-router-dom'
 import Filter from "../components/Filter"
 import CartProduct from "../components/CartProduct"
+import Pagination from "../components/Pagination"
 
 // loader function
 export const loader = async ({ request }) => {
@@ -10,9 +11,10 @@ export const loader = async ({ request }) => {
 
     try {
         const { data } = await API.get('/product/products', { params })
-        console.log(request);
+        // console.log(request);
         const products = data.data
-        return { products, params }
+        const pagination = data.pagination
+        return { products, params, pagination }
     } catch (error) {
         console.error("API Error:", error)
         throw error
@@ -20,11 +22,12 @@ export const loader = async ({ request }) => {
 }
 
 const ProductView = () => {
-    const { products } = useLoaderData()
+    const { products, pagination } = useLoaderData()
 
     return (
         <>
             <Filter />
+            <h3 className="text-lg text-primary font-bold text-right my-3">Jumlah Product : {pagination.totalProduct} Products</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mt-5">
                 {!products.length ? (
                     <div className="col-span-full flex justify-center items-center mt-5">
@@ -35,6 +38,9 @@ const ProductView = () => {
                         <CartProduct item={item} key={item._id} />
                     )
                     ))}
+            </div>
+            <div className="mt-5 flex justify-center">
+                <Pagination />
             </div>
         </>
     )
