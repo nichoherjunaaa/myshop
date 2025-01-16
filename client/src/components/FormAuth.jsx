@@ -15,12 +15,12 @@ const FormAuth = ({ isRegister }) => {
                 </div>
                 {isRegister ? (
                     <p className="text-center">
-                        Sudah punya akun? 
+                        Sudah punya akun?
                         <Link to="/login" className="ml-2 link link-hover link-accent capitalize">Login</Link>
                     </p>
                 ) : (
                     <p className="text-center">
-                        Belum punya akun? 
+                        Belum punya akun?
                         <Link to="/register" className="ml-2 link link-hover link-accent capitalize">Register</Link>
                     </p>
                 )}
