@@ -27,12 +27,31 @@ const cartSlice = createSlice({
             state.cartTotal += product.price * product.amount
             localStorage.setItem('cart', JSON.stringify(state))
             toast.success('Produk berhasil ditambahkan ke keranjang')
+        },
+        editItem: (state, action) => {
+            const { cartId, amount } = action.payload
+            const itemProduct = state.CartItems.find(i => i.cartId === cartId)
+
+            state.numItemsInCart += amount - itemProduct.amount
+            state.cartTotal += itemProduct.price * (amount - itemProduct.amount)
+            itemProduct.amount = amount
+            localStorage.setItem('cart', JSON.stringify(state))
+            toast.info('Produk berhasil diupdate')
+        },
+        removeItem: (state, action) => {
+            const { cartId } = action.payload
+            const itemProduct = state.CartItems.find(i => i.cartId === cartId)
+            state.CartItems = state.CartItems.filter(i => i.cartId !== cartId)
+            state.numItemsInCart -= itemProduct.amount
+            state.cartTotal -= itemProduct.price * itemProduct.amount
+            localStorage.setItem('cart', JSON.stringify(state))
+            toast.success('Produk berhasil dihapus')
         }
     }
 })
 // console.log('Initial State from localStorage:', getCartFromLocalStorage())
 
-export const { addItem } = cartSlice.actions
+export const { addItem, editItem, removeItem } = cartSlice.actions
 
 export default cartSlice.reducer
 

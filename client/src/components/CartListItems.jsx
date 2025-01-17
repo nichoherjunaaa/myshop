@@ -1,8 +1,17 @@
 import React from 'react'
 import { generateSelectAmount, formatHarga } from '../utils'
 import { FaTrash } from 'react-icons/fa6'
+import { useDispatch } from 'react-redux'
+import { editItem, removeItem } from '../features/cartSlice'
 const CartListItems = ({ cartItem }) => {
     const { cartId, name, price, image, amount, stock } = cartItem
+    const dispatch = useDispatch()
+    const handleAmount = (e) => {
+        dispatch(editItem({ cartId, amount: parseInt(e.target.value) }))
+    }
+    const removeProductHandle = () => {
+        dispatch(removeItem({cartId}))
+    }
     return (
         <>
             <article key={cartId} className="mb-12 flex flex-col gap-y-4 sm:flex-row flex-wrap border-b border-base-300 pb-6 last:border-b-0">
@@ -22,12 +31,12 @@ const CartListItems = ({ cartItem }) => {
                             name="amount"
                             className="select select-bordered sm:w-full"
                             value={amount}
-                            onChange={() => console.log('button click')}
+                            onChange={handleAmount}
                         >
                             {generateSelectAmount(stock)}
                         </select>
                     </div>
-                    <button className="mt-2 btn-secondary btn-block btn">
+                    <button className="mt-2 btn-secondary btn-block btn" onClick = {removeProductHandle}>
                         <FaTrash />
                     </button>
                 </div>
