@@ -11,6 +11,8 @@ const Navbar = () => {
     const user = useSelector(state => state.userState.user)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const countCart = useSelector(state => state.cartState.numItemsInCart)
+    console.log(countCart);
     const handlingLogout = async () => {
         await API.get('/auth/logout')
         dispatch(logoutUser())
@@ -42,7 +44,7 @@ const Navbar = () => {
                     <NavLink to='/cart' className="btn btn-ghost btn-circle btn-md">
                         <div className="indicator">
                             <BsCart3 />
-                            <span className="badge badge-primary badge-sm indicator-item">8</span>
+                            <span className="badge badge-primary badge-sm indicator-item">{countCart}</span>
                         </div>
                     </NavLink>
                     {user && (

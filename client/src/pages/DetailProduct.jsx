@@ -3,15 +3,31 @@ import { useState, useEffect } from 'react'
 import API from '../api'
 import { FaPlus } from 'react-icons/fa'
 import { generateSelectAmount, formatHarga } from '../utils'
+import { useDispatch } from 'react-redux'
+import { addItem } from '../features/cartSlice'
 
 const DetailProduct = () => {
     let { id } = useParams()
     const [product, setProduct] = useState("")
     const [amount, setAmount] = useState(1)
+
+
+    const dispatch = useDispatch()
+
     const productData = async () => {
         const { data } = await API.get(`/product/detail/${id}`)
         // console.log(data.data);
         setProduct(data.data)
+    }
+
+    const productCart = {
+        cartId : product._id + product.name,
+        productId : product._id,
+        image : product.image,
+        name : product.name,
+        price : product.price,
+        stock : product.stock,
+        amount
     }
 
     const handleAmount = (e) => {
@@ -19,7 +35,8 @@ const DetailProduct = () => {
     }
 
     const cartHandle = () => {
-        console.log("Keranjang", product, amount);
+        // console.log("Keranjang", product, amount);
+        dispatch(addItem({product : productCart}))
     }
 
     useEffect(() => {
@@ -47,9 +64,9 @@ const DetailProduct = () => {
                                 <label htmlFor="" className="label">
                                     <span className="capitalize label-text">Amount</span>
                                 </label>
-                                <select name="amount" className="select select-bordered" id="" onChange = {handleAmount}>{generateSelectAmount(product.stock)}</select>
+                                <select name="amount" className="select select-bordered" id="" onChange={handleAmount}>{generateSelectAmount(product.stock)}</select>
                             </label>
-                            <button className="btn btn-primary btn-lg" onClick = {cartHandle}><FaPlus />Keranjang</button>
+                            <button className="btn btn-primary btn-lg" onClick={cartHandle}><FaPlus />Keranjang</button>
                         </div>
                     </div>
                 </div>
