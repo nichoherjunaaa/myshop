@@ -8,7 +8,7 @@ import LoginView from './pages/auth/LoginView'
 import RegisterView from './pages/auth/RegisterView'
 import PublicLayout from './layouts/PublicLayout'
 import DetailProduct from './pages/DetailProduct'
-
+import CheckoutView from './pages/CheckoutView'
 // loader
 import { loader as HomeLoader } from './pages/HomeView'
 import { loader as ProductLoader } from './pages/ProductView'
@@ -42,6 +42,10 @@ const router = createBrowserRouter([
       {
         path: 'orders',
         element: <OrderView />,
+      },
+      {
+        path : 'checkout',
+        element: <CheckoutView />,
       },
       {
         path: 'cart',
