@@ -12,18 +12,22 @@ import CheckoutView from './pages/CheckoutView'
 // loader
 import { loader as HomeLoader } from './pages/HomeView'
 import { loader as ProductLoader } from './pages/ProductView'
-
+import { loader as CheckoutLoader } from './pages/CheckoutView'
 // action
 import { action as LoginAction } from './pages/auth/LoginView'
 import { action as RegisterAction } from './pages/auth/RegisterView'
 
 // storage
-import {store} from './store'
+import { store } from './store'
+
+// error view
+import ErrorView from './pages/ErrorView'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <PublicLayout />,
+    errorElement: <ErrorView />,
     children: [
       {
         index: true,
@@ -37,15 +41,16 @@ const router = createBrowserRouter([
       },
       {
         path: 'product/detail/:id',
-        element: <DetailProduct/>,
+        element: <DetailProduct />,
       },
       {
         path: 'orders',
         element: <OrderView />,
       },
       {
-        path : 'checkout',
+        path: 'checkout',
         element: <CheckoutView />,
+        loader: CheckoutLoader(store),
       },
       {
         path: 'cart',
@@ -70,7 +75,7 @@ const router = createBrowserRouter([
 ])
 function App() {
   return (
-    <RouterProvider router ={router} />
+    <RouterProvider router={router} />
   )
 }
 

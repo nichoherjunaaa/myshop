@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import API from '../api'
 import { toast } from 'react-toastify'
 import { clearCartItem } from '../features/cartSlice'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, redirect } from 'react-router-dom'
 
 const insertSnapScript = () => {
     return new Promise((resolve) => {
@@ -18,6 +18,15 @@ const insertSnapScript = () => {
         }
         document.body.appendChild(script)
     })
+}
+
+export const loader = (storage) => () => {
+    const user = storage.getState().userState.user
+    if(!user){
+        toast.warn('Silahkan login terlebih dahulu')
+        return redirect('/login')
+    }
+    return null
 }
 
 const CheckoutView = () => {
