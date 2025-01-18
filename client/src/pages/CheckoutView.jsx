@@ -1,10 +1,12 @@
 import React from 'react'
 import CartTotal from '../components/CartTotal'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import FormInput from '../components/Form/FormInput'
 import { useEffect } from 'react'
 import API from '../api'
 import { toast } from 'react-toastify'
+import { clearCartItem } from '../features/cartSlice'
+import { useNavigate } from 'react-router-dom'
 
 const insertSnapScript = () => {
     return new Promise((resolve) => {
@@ -23,6 +25,9 @@ const CheckoutView = () => {
     const carts = useSelector((state) => state.cartState.CartItems)
     // console.log(carts);
     // console.log(user);
+
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const handleCheckout = async (e) => {
         e.preventDefault()
@@ -47,11 +52,13 @@ const CheckoutView = () => {
 
             const snapToken = response.data.token
 
-            snap.pay(snapToken.token, {
+            window.snap.pay(snapToken.token, {
                 // Optional
                 onSuccess: function (result) {
                     console.log(result);
-                    alert('Success')
+                    dispatch(clearCartItem())
+                    navigate('/orders')
+                    toast.success('Pesanan Berhasil Diproses')
                 },
                 // Optional
                 onPending: function (result) {
@@ -66,7 +73,8 @@ const CheckoutView = () => {
             })
             toast.success('Pesanan Berhasil Diproses')
         } catch (error) {
-            console.error(error)
+            const errMsg = error?.response?.data?.message;
+            toast.error(errMsg);
         }
     }
 
