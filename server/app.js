@@ -29,7 +29,7 @@ app.use(express.static('./public'))
 dbConnection()
 
 app.get('/', (req, res) => {
-    res.send('Server Ready !')
+    res.send('API Ready !')
 })
 
 
