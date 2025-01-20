@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux'
 
 // loader function
 export const loader = async ({ request }) => {
-    const url = new URL(request.url)  // Ambil URL dari request
-    const params = Object.fromEntries(new URLSearchParams(url.search)) // Ambil query params
-
+    const url = new URL(request.url)
+    const params = Object.fromEntries(new URLSearchParams(url.search))
+    params.limit = 8
     try {
         const { data } = await API.get('/product/products', { params })
         // console.log(request);
