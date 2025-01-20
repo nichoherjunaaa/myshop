@@ -16,6 +16,8 @@ import { loader as HomeLoader } from './pages/HomeView'
 import { loader as ProductLoader } from './pages/ProductView'
 import { loader as CheckoutLoader } from './pages/CheckoutView'
 import { loader as OrderLoader } from './pages/OrderView'
+import { loader as CreateProductLoader } from './pages/CreateProductView'
+import { loader as EditProductLoader } from './pages/EditProductView'
 // action
 import { action as LoginAction } from './pages/auth/LoginView'
 import { action as RegisterAction } from './pages/auth/RegisterView'
@@ -44,11 +46,13 @@ const router = createBrowserRouter([
       },
       {
         path: 'product/create',
-        element: <CreateProductView/>,
-        },
+        element: <CreateProductView />,
+        loader: CreateProductLoader(store),
+      },
       {
         path: '/product/:id/edit',
-        element: <EditProductView/>,
+        element: <EditProductView />,
+        loader: EditProductLoader(store),
       },
       {
         path: 'product/detail/:id',

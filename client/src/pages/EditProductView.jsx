@@ -1,11 +1,23 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, redirect } from 'react-router-dom'
 import API from '../api'
 import Loading from '../components/Loading'
 import FormInput from '../components/Form/FormInput'
 import FormSelect from '../components/Form/FormSelect'
 import FormTextArea from '../components/Form/FormTextArea'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
+
+export const loader = (store) => async () => {
+    const user = store.getState().userState.user
+    if (!user) {
+        return redirect('/login')
+    }
+    if (user.role !== 'owner') {
+        toast.warn('Anda tidak boleh mengakses halaman ini')
+        return redirect('/')
+    }
+    return null
+}
 
 const EditProductView = () => {
     const [product, setProduct] = useState(null)

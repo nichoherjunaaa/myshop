@@ -11,16 +11,22 @@ export const loader = (storage) => async () => {
         toast.warn('Silahkan login terlebih dahulu')
         return redirect('/login')
     }
-    const { data } = await API.get('/order/current/user')
-    const orders = data.data
+    let orders;
+    if (user.role !== 'owner') {
+        const { data } = await API.get('/order/current/user')
+        orders = data.data
+    } else {
+        const { data } = await API.get('/order')
+        orders = data.data
+    }
     console.log(orders);
     return { orders }
 }
 const OrderView = () => {
     const { orders } = useLoaderData()
-    if(!orders.length) {
+    if (!orders.length) {
         return (
-                <h2 className="text-xl text-center text-primary font-bold py-3 border-b border-secondary">Anda belum melakukan pemesanan</h2>
+            <h2 className="text-xl text-center text-primary font-bold py-3 border-b border-secondary">Anda belum melakukan pemesanan</h2>
         )
     }
     return (
@@ -38,24 +44,28 @@ const OrderView = () => {
                 </thead>
                 <tbody>
                     {orders.map((item, index) => (
-                        <tr key ={item._id} className="hover">
+                        <tr key={item._id} className="hover">
                             <th>{index + 1}</th>
                             <td>{item.firstname} {item.lastname}</td>
-                            <ul className="list-disc">
-                                {item.itemsDetail.map(itemProduct => (
-                                    <li key={itemProduct.product}>{itemProduct.name} <br/>
-                                    <span className="font-bold">Jumlah : {itemProduct.quantity}</span> <br /> {" "}
-                                    {formatHarga(itemProduct.price)}
-                                    </li>
-                                ))}
-                            </ul>
+                            <td>
+                                <ul className="list-disc">
+                                    {item.itemsDetail.map(itemProduct => (
+                                        <li key={itemProduct.product}>
+                                            {itemProduct.name} <br />
+                                            <span className="font-bold">Jumlah : {itemProduct.quantity}</span> <br />{" "}
+                                            {formatHarga(itemProduct.price)}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </td>
+
                             <td>{formatHarga(item.total)}</td>
                             <td>
                                 {(item.status === "pending") ? (
                                     <span className="text-warning">Pending</span>
                                 ) : (item.status === "success") ? (
                                     <span className="text-success">Success</span>
-                                ) :(
+                                ) : (
                                     <span className="text-danger">Failed</span>
                                 )}
                             </td>

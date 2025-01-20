@@ -3,7 +3,19 @@ import FormSelect from '../components/Form/FormSelect'
 import FormTextArea from '../components/Form/FormTextArea'
 import API from '../api'
 import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, redirect } from 'react-router-dom'
+
+export const loader = (store) => async () => {
+    const user = store.getState().userState.user
+    if (!user) {
+        return redirect('/login')
+    }
+    if (user.role !== 'owner') {
+        toast.warn('Anda tidak boleh mengakses halaman ini')
+        return redirect('/')
+    }
+    return null
+}
 
 const CreateProductView = () => {
     const categories = ["Sepatu", "Baju", "Kemeja", "Celana"]
@@ -14,7 +26,7 @@ const CreateProductView = () => {
         const formData = new FormData(form)
         const data = Object.fromEntries(formData)
         try {
-            const responseFile = await API.post('/product/upload',{ image : data.image}, {
+            const responseFile = await API.post('/product/upload', { image: data.image }, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

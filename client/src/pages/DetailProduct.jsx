@@ -68,7 +68,7 @@ const DetailProduct = () => {
                     <div className="card-actions justify-end">
                         <div className="p-8 flex flex-col gap-y-4">
                             {
-                                product.stok > 0 && (
+                                product.stock > 0 && (
                                     <>
                                         <label htmlFor="" className="form-control">
                                             <label htmlFor="" className="label">
