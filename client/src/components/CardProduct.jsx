@@ -23,12 +23,12 @@ const CartProduct = ({ item, user }) => {
         <>
             <div className="card bg-base-300 shadow-xl" key={item._id}>
                 <figure>
-                    <div className="relative">
-
-
+                    <div className="relative aspect-square">
                         <img
                             src={item.image}
-                            alt="Shoes" />
+                            alt={item.name} 
+                            className="w-full h-full object-cover"
+                            />
                         {
                             item.stock < 1 && (
                                 <span className="absolute top-0 right-0 bg-error text-xl rounded-md font-bold p-2">Sold Out</span>
@@ -43,9 +43,11 @@ const CartProduct = ({ item, user }) => {
                             <Link to={`/product/${item._id}/edit`}><FaPencilAlt className="text-info cursor-pointer" /></Link>
                         </div>
                     )}
-                    <h2 className="card-title text-primary">{item.name}</h2>
-                    <p className="font-bold text-accent">{formatHarga(item.price)}</p>
-                    <p>{item.description.substring(0, 50)}</p>
+                    <h2 className="card-title text-pretty">{item.name}</h2>
+                    <p className="font-bold text-pretty">{formatHarga(item.price)}</p>
+                    <p> {item.description.length > 50
+                        ? `${item.description.substring(0, 50)}...`
+                        : item.description}</p>
                     <div className="card-actions justify-end">
                         <Link to={`/product/detail/${item._id}`} className="btn btn-primary">Buy Now</Link>
                     </div>

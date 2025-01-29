@@ -27,19 +27,23 @@ const Navbar = () => {
     }
     return (
         <nav className="bg-base-200">
-            <div className="navbar mx-auto max-w-6xl px-8">
+            <div className="navbar mx-auto max-w-8xl px-8">
                 <div className="navbar-start">
-                    <NavLink to='/' className="hidden lg:flex btn btn-primary text-3xl items-center">
-                        Logo
-                    </NavLink>
-                    <div className="dropdown">
+                    {/* <div className="hidden lg:flex text-md items-center">
+                        <img src={Logo} alt="Logo" className="h-12 w-12" />
+                    </div> */}
+                    <div className="dropdown relative">
                         <label tabIndex={0} className="btn btn-ghost lg:hidden">
-                            <FaBarsStaggered className="h6 w-6" />
+                            <FaBarsStaggered className="h-6 w-6" />
                         </label>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52">
+                        <ul
+                            tabIndex={0}
+                            className="menu menu-sm dropdown-content absolute mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52 left-0"
+                        >
                             <NavList />
                         </ul>
                     </div>
+
                     {/* Dekstop */}
                     <div className="hidden lg:flex">
                         <ul className="menu menu-horizontal">
@@ -47,7 +51,10 @@ const Navbar = () => {
                         </ul>
                     </div>
                 </div>
-                <div className="navbar-end">
+                <div className="navbar-end flex md:gap-4">
+                    {!user && (
+                        <NavLink className="btn btn-ghost bg-primary px-5" to='/login'>Login</NavLink>
+                    )}
                     <NavLink to='/cart' className="btn btn-ghost btn-circle btn-md">
                         <div className="indicator">
                             <BsCart3 />
