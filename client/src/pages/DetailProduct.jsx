@@ -45,7 +45,7 @@ const DetailProduct = () => {
 
     return (
             <section>
-                <div className="card bg-base-300 shadow-xl lg:card-side h-[500px]">
+                <div className="card bg-base-300 shadow-xl lg:card-side h-[500px] mb-10">
                     <figure className="flex-1">
                         <div className="relative w-full h-full flex justify-center items-center">
                             <img
@@ -70,20 +70,20 @@ const DetailProduct = () => {
                         </div>
                         <div className="card-actions justify-end">
                             {product.stock > 0 && (
-                                <div className="p-4 flex flex-col gap-y-4">
+                                <div className="p-4 flex lg:flex-col gap-y-4 gap-5">
                                     <label htmlFor="" className="form-control">
                                         <label htmlFor="" className="label">
-                                            <span className="capitalize label-text">Amount</span>
+                                            <span className="capitalize label-text">Jumlah</span>
                                         </label>
                                         <select
                                             name="amount"
-                                            className="select select-bordered"
+                                            className="select select-bordered w-full"
                                             onChange={handleAmount}
                                         >
                                             {generateSelectAmount(product.stock)}
                                         </select>
                                     </label>
-                                    <button className="btn btn-primary btn-lg" onClick={cartHandle}>
+                                    <button className="btn btn-primary lg:btn-lg mt-9 lg:mt-0" onClick={cartHandle}>
                                         <FaPlus /> Keranjang
                                     </button>
                                 </div>
