@@ -43,13 +43,13 @@ const CartProduct = ({ item, user }) => {
                             <Link to={`/product/${item._id}/edit`}><FaPencilAlt className="text-info cursor-pointer" /></Link>
                         </div>
                     )}
-                    <h2 className="card-title text-pretty">{item.name}</h2>
-                    <p className="font-bold text-pretty">{formatHarga(item.price)}</p>
-                    <p> {item.description.length > 50
+                    <h2 className="card-title text-pretty text-sm font-extrabold lg:text-2xl">{item.name}</h2>
+                    <p className="font-bold text-pretty text-xs lg:text-xl">{formatHarga(item.price)}</p>
+                    <p className="text-xs lg:text-lg"> {item.description.length > 50
                         ? `${item.description.substring(0, 50)}...`
                         : item.description}</p>
                     <div className="card-actions justify-end">
-                        <Link to={`/product/detail/${item._id}`} className="btn btn-primary">Buy Now</Link>
+                        <Link to={`/product/detail/${item._id}`} className="btn btn-primary btn-xs">Buy Now</Link>
                     </div>
                 </div>
             </div>
