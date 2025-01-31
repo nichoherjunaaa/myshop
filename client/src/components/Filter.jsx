@@ -11,7 +11,7 @@ const Filter = () => {
     const [showFilters, setShowFilters] = useState(false);
 
     return (
-        <div className="bg-base-200 rounded-md p-4 sm:p-6 w-full max-w-3xl mx-auto">
+        <div className="bg-base-200 rounded-md p-4 sm:p-6 w-full mx-auto">
             <Form method="get" className="w-full mb-4">
                 <div className="flex flex-wrap items-center gap-2">
                     <div className="flex-grow">
