@@ -50,7 +50,7 @@ const CartProduct = ({ item, user }) => {
                         : item.description}
                 </p>
                 <div className="card-actions justify-center lg:justify-end mt-3 sm:mt-5 items-center">
-                    <Link to={`/product/detail/${item._id}`} className="btn btn-primary btn-sm sm:btn-sm md:btn-md lg:btn-lg flex justify-center items-center text-center">
+                    <Link to={`/product/detail/${item._id}`} className="btn btn-primary rounded-none btn-sm sm:btn-sm md:btn-md lg:btn-lg flex justify-center items-center text-center">
                         Lihat Produk
                     </Link>
                 </div>
